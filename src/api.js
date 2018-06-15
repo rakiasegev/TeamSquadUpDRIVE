@@ -74,6 +74,7 @@ export class YelpAPI extends React.Component {
             if(!err){
               var output= ""
               const resultsJSON = JSON.parse(body)
+
               const results= resultsJSON.results
               console.log(results)
               Object.values(results).forEach(function(result){
@@ -125,11 +126,21 @@ export class YelpAPI extends React.Component {
           }
     
     handleChangeSubmitLocation(event){ 
-        this.setState({value: event.target.value});    }
+        this.setState({value: event.target.value});   
+       
+        //using 'enter' key
+       if (event.keyCode == 13){
+        console.log('it works')
+        this.setState({value: event.target.value});
+      }
+      
+      }
     
     handleSubmitLocation(event) {
         this.GMapsAPI(this.state.value)
         event.preventDefault();
+
+        
       }
     handleSubmitRadius(event){ 
 

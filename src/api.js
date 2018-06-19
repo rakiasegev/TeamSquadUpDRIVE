@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { EHOSTUNREACH } from 'constants';
+import "./api.css"
 
-
-export class YelpAPI extends React.Component {
+export class API extends React.Component {
     constructor() { 
         super() 
         this.state= {
@@ -10,7 +10,8 @@ export class YelpAPI extends React.Component {
             latitude: 0,
             longitude:0,
             userRadius:0 ,
-            results: "" 
+            results:[],
+            key: "AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU"
         }
     }
     grabAPI(location){
@@ -39,7 +40,7 @@ export class YelpAPI extends React.Component {
       const request = require('request');
       console.log(location)
       request({
-        url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU&input='+ this.state.value+'&inputtype=textquery',
+        url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=' + this.state.key+ '&input='+ this.state.value+'&inputtype=textquery',
       }, function(err, res, body) {
         if (err) {
           console.error(err);
@@ -48,7 +49,7 @@ export class YelpAPI extends React.Component {
           var placeID= obj.candidates[0].place_id
           const quest = require('request');
           quest({
-            url: "http://localhost:8080/https://maps.googleapis.com/maps/api/place/details/json?placeid="+placeID+"&key=AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU"
+            url: "http://localhost:8080/https://maps.googleapis.com/maps/api/place/details/json?placeid="+placeID+"&key=" + this.state.key+ ""
         }, function(err, res, body) {
           if (err) {
             console.error(err);
@@ -69,16 +70,20 @@ export class YelpAPI extends React.Component {
           //using the location in state
           const request = require('request');
           request({
-            url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU&location='+this.state.latitude+","+ this.state.longitude+'&rankby=distance&type=restaurant'
+            url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=' + this.state.key+ '&location='+this.state.latitude+","+ this.state.longitude+'&rankby=distance&type=restaurant'
           },function(err,res,body){
             if(!err){
-              var output= ""
+              var output= []
               const resultsJSON = JSON.parse(body)
 
               const results= resultsJSON.results
               console.log(results)
               Object.values(results).forEach(function(result){
-                output= output+ "\n" + result.name
+                var ref= "CmRaAAAAiJXePWe2z4gmIfMTlehvhKrzDWDSLt3qpzNTTb6ePG09O_9McUVlJqbCtwAtEsQShc3XPENqtszlszeFfAm5SlNQMqMpTblxfBHqkF5nOTxpmdrndfWTgeNLrYH3w99nEhCHIJhs2a4Ssv9xlRHz_7BgGhTSCIlnGXCRiDvvqu1PDOfl6_dbKg"
+                if(result.photos!=undefined){
+                  ref= result.photos[0].photo_reference
+                }
+                output= output.concat({"name":result.name, "rating":result.rating, "photoReference": ref })
               })
               this.setState({
                 results: output
@@ -109,7 +114,7 @@ export class YelpAPI extends React.Component {
       
             const request = require('request');
             request({
-              url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/geocode/json?latlng='+this.state.latitude+","+ this.state.longitude+"&key=AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU"
+              url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/geocode/json?latlng='+this.state.latitude+","+ this.state.longitude+"&key=" + this.state.key
             }, function(err, res, body) {
               if (err) {
                 console.error(err);
@@ -151,6 +156,8 @@ export class YelpAPI extends React.Component {
       this.setState({userRadius: event.target.value});   
       }
       
+  
+
 	render(){
 	return(
     <div> 
@@ -161,20 +168,26 @@ export class YelpAPI extends React.Component {
         <input type="text" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
         <button onClick={this.handleSubmitLocation.bind(this)}>Submit</button>
         <button onClick={ this.getDeviceLocation.bind(this) }> Use Device Location </button> 
-
+        
       </label>
       </p> 
-      <p>
+      
         <label>
           Radius:
           <input type="text" value={this.state.userRadius} onChange={this.handleChangeRadius.bind(this)}/> 
         </label>  
         <button onClick= {this.handleSubmitRadius.bind(this)}>Submit</button> 
-        <p>
-        {this.state.results.split("\n").map(i => {
-            return <div>{i}</div>;
+        
+        {console.log(this.state.results)}
+        {this.state.results.map(i => {
+
+            return <div className= "curatedCards">
+             <p> Name: {i["name"]}</p>
+             <p>Rating:{i["rating"]}</p> 
+             <img className= "Image" type="image" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + i['photoReference']+ "&key="+this.state.key }/> 
+            </div>;
         })}
-        </p>
-      </p> 
+        
+      
     </div> 
 )}}

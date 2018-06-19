@@ -1,0 +1,15 @@
+/*ApiCSS */ 
+.curatedCards{ 
+    outline: 3px solid black;
+    margin: 35px;
+    width: 450px;
+    padding: 4px;
+    position: relative;
+    align-self: center;
+}
+
+.Image{ 
+    visibility: show;
+    position: relative;
+    align-self: center;
+}

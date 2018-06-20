@@ -1,4 +1,5 @@
 {
+  "homepage": "https://squadup-85676.firebaseapp.com/ ",
   "name": "pwa-experiment",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +7,7 @@
     "@google/maps": "^0.4.6",
     "bootstrap": "^3.3.7",
     "build": "^0.1.4",
+    "firebase": "^5.0.4",
     "jsonp": "^0.2.1",
     "jsonp-request": "0.0.5",
     "make": "^0.8.1",

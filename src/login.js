@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import { Redirect} from 'react-router-dom'
 import { app, facebookProvider } from './base' 
 
+const loginStyles = {
+    width: "90%",
+    maxWidth: "315px",
+    margin: "20px auto",
+    border: "1px solid #ddd",
+    borderRadius: "5px",
+    padding: "10px"
+}
+
 export class login extends Component {
     constructor(props){
         super(props)
@@ -23,7 +32,7 @@ export class login extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={loginStyles}>
             <button style={{width: "100%"}} className="pt-button pt-intent-primary" onClick={() => this.authWithFacebook()}>Log In with Facebook</button>
             <hr style={{marginTop: "10px", marginBottom: "10px"}} />
             <form onSubmit={(event) => this.authWithEmailPassword(event)}>

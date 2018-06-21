@@ -6,8 +6,6 @@ import {weatherapi} from './weatherapi';
 import {Cards} from './Cards'
 import { Router, browserHistory, Route, Link } from 'react-router';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
-import ReactSwipe from 'react-swipe';
-
 
 render((
   <Router history={browserHistory}>

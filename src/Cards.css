@@ -1,8 +1,14 @@
-.Card1{ 
-    width: fit-content; 
-    height: fit-content;
-    margin-block-start: 2px;
-    position: relative;
-    top: 30px; 
-    left: 50%; 
+.Card-hidden{ 
+    width: 25%; 
+    height: 15%;
+    visibility: hidden;
+}
+.Card-visible{
+    width: 25%; 
+    height: 15%;
+}
+
+.BOX { 
+    height: 1000px; 
+    width: 1000px;
 }

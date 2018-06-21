@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import { EHOSTUNREACH } from 'constants';
 import "./api.css"
-import { Cards } from './Cards';
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import Draggable from 'react-draggable'; // The default
 
 export class API extends React.Component {
     constructor() { 
         super() 
         this.state= {
+            counter:0 , 
+            generatedCard: null,
             value: "",
             latitude: 0,
             longitude:0,
             userRadius:0 ,
             results:[],
-            key: "AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU"
+            key: "AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU",
+            deltaPosition: {
+              x: 0, y: 0
+          },
+          visibility: "visible"
         }
     }
     grabAPI(location){
@@ -106,30 +114,55 @@ export class API extends React.Component {
           }
           }
       
-           getLocationSuccess(position){ 
-             console.log(position)
-            this.setState({ 
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            })
-      
-            const request = require('request');
-            request({
-              url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/geocode/json?latlng='+this.state.latitude+","+ this.state.longitude+"&key=" + this.state.key
-            }, function(err, res, body) {
-              if (err) {
-                console.error(err);
-              } else {
-                console.log(body)
-            }})
-          this.GMapsNearby()
-          }
+        getLocationSuccess(position){ 
+          console.log(position)
+        this.setState({ 
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        })
+  
+        const request = require('request');
+        request({
+          url: 'http://localhost:8080/https://maps.googleapis.com/maps/api/geocode/json?latlng='+this.state.latitude+","+ this.state.longitude+"&key=" + this.state.key
+        }, function(err, res, body) {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log(body)
+        }})
+      this.GMapsNearby()
+      }
           
       
-          getLocationError(){ 
-            console.log("NOPE")
-            return ("NOPE")
+      getLocationError(){ 
+        console.log("NOPE")
+        return ("NOPE")
+      }
+
+      handleD(e, ui) {
+        const {x, y} = this.state.deltaPosition;
+        this.setState({
+          deltaPosition: {
+            x: x + ui.deltaX,
+            y: y + ui.deltaY,
           }
+        });
+        this.completeSwipe() 
+      }
+
+      completeSwipe(){
+        console.log("MADE IT")
+        if(this.state.deltaPosition.x>100){
+            this.setState({
+                visibility: "hidden"
+            })
+        }
+        else { 
+     
+        }
+    }
+
+
     
     handleChangeSubmitLocation(event){ 
         this.setState({value: event.target.value});   
@@ -160,6 +193,8 @@ export class API extends React.Component {
   
 
 	render(){
+    const deltaPosition = this.state.deltaPosition;
+
 	return(
     <div> 
       <h1> Google Maps </h1>
@@ -179,9 +214,35 @@ export class API extends React.Component {
         </label>  
         <button onClick= {this.handleSubmitRadius.bind(this)}>Submit</button> 
         
-        {console.log(this.state.results)}
-        <Cards results= {this.state.results} />
+        {console.log("HELLO",this.state.results)}
         
-      
+        
+       {this.state.results.map(i => { return(
+       
+      <Draggable
+        axis="x"
+        handle=".handle"
+        defaultPosition={{x: 100, y: 100}}
+        position={null}
+        grid={[25, 25]}
+        onStart={this.handleStart}
+        onDrag={this.handleD.bind(this)}
+        onStop={this.handleStop}>
+        
+        <div>
+        <Card className={"Card-"+this.state.visibility}>
+          <CardImg className= "Image" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + i['photoReference']+ "&key="+this.state.key}/>
+          <CardBody>
+          <CardTitle>Name: {i["name"]}</CardTitle>
+          <CardSubtitle>Rating:{i["rating"]}</CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                   
+          </CardBody>
+          </Card>
+          </div>
+        
+      </Draggable>
+
+        )})}
     </div> 
 )}}

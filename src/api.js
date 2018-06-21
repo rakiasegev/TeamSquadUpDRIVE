@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { EHOSTUNREACH } from 'constants';
 import "./api.css"
+import { Cards } from './Cards';
 
 export class API extends React.Component {
     constructor() { 
@@ -179,14 +180,7 @@ export class API extends React.Component {
         <button onClick= {this.handleSubmitRadius.bind(this)}>Submit</button> 
         
         {console.log(this.state.results)}
-        {this.state.results.map(i => {
-
-            return <div className= "curatedCards">
-             <p> Name: {i["name"]}</p>
-             <p>Rating:{i["rating"]}</p> 
-             <img className= "Image" type="image" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + i['photoReference']+ "&key="+this.state.key }/> 
-            </div>;
-        })}
+        <Cards results= {this.state.results} />
         
       
     </div> 

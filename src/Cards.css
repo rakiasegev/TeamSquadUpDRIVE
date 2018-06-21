@@ -1,0 +1,8 @@
+.Card1{ 
+    width: fit-content; 
+    height: fit-content;
+    margin-block-start: 2px;
+    position: relative;
+    top: 30px; 
+    left: 50%; 
+}

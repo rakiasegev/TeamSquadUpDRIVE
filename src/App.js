@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.png';
 import './App.css';
-import login from './login';
 import { Router, browserHistory, Route, Link } from 'react-router';
 
 class App extends Component {
@@ -23,10 +22,7 @@ class App extends Component {
         This is the {this.state.title} page.
       </p>
       <p>
-        <Link to="/">Home</Link>
-      </p>
-      <p>
-        <Link to="/login">Log In</Link>
+        <Link to="/login">Home</Link>
       </p>
       <p>
         <Link to="/api">Google Maps</Link>

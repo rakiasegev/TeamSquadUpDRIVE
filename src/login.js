@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect} from 'react-router-dom'
-import { app, facebookProvider } from './base' 
+import firebase, {auth, provider} from './firebase' 
 import logo from './logo.png';
 import facebook from './facebook.png'
 import google from './google.png'
@@ -28,32 +28,67 @@ const loginStylesOuter = {
 
 
 export class login extends Component {
-    constructor(props){
-        super(props)
-        this.authWithFacebook = this.authWithFacebook.bind(this)
-        this.authWithEmailPassword = this.authWithEmailPassword.bind(this)
+    constructor(){
+        super();
+        //this.authWithFacebook = this.authWithFacebook.bind(this)
+        
         this.state = {
             redirect:false,
             emailentry: '',
             passwordentry: '',
-            items: []
+            items: [],
+            user: null
         }
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
+    /*
     authWithFacebook(){
         console.log("authenticated with fb")
         //will cause a popup to facebook
         app.auth().signInWithPopup(facebookProvider)
     }
+    
 
     authWithEmailPassword(event){
         //prevents going to another page
-        event.preventdefault()
+        event.preventDefault()
         console.table([{
             email: this.emailInput.value,
             password: this.passwordinput.value
         }])
     }
+
+    */
+
+   logout() {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+  }
+
+  login() {
+    auth.signInWithPopup(provider) 
+      .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
+  }
+
+  //keeps the user logged in
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      } 
+    });}
+
     render() {
         if (this.state.redirect == true){
             return <Redirect to = '/' />
@@ -63,12 +98,11 @@ export class login extends Component {
             <img src={logo} className="App-logo2" alt="logo" />
             <div style={loginStylesOuter}>
             <div style={loginStyles}>
-            <button style={{width: "100%"}} type="submit" className="header"> <img src={facebook} /> Login with Facebook </button>
-            <button style={{width: "100%"}} type="submit" className="header2"> <img src={google} /> Login with Google</button>
-
-            {/* <button2 style={{width: "100%"}} type="submit" className="pt-button pt-intent-primary" onClick={() => this.authWithFacebook()}>Log In with Facebook</button2> */}
+           
+            <button style={{width: "100%"}} type="submit" className="header"> <img src={facebook}  /> Login with Facebook </button>
+            <button style={{width: "100%"}} type="submit" className="header2"> <img src={google} onClick={this.login} /> Login with Google</button>
             <hr style={{marginTop: "10px", marginBottom: "10px"}} />
-            <form onSubmit={(event) => this.authWithEmailPassword(event)}>
+            <form onSubmit={(event) => this.login}>
               <div style={{marginBottom: "20px"}} className="pt-callout pt-icon-info-sign">
                 <h5>Welcome to SquadUp</h5>
                 Enter your email and create a password to create an account!

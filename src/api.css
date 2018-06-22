@@ -29,7 +29,7 @@
     height: 15%;
 }
 
-.BOX { 
-    height: 1000px; 
-    width: 1000px;
+.BOX{
+    height: fit-content;
+    width: fit-content; 
 }

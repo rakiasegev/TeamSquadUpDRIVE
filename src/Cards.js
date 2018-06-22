@@ -19,8 +19,16 @@ export class Cards extends Component {
             deltaPosition: {
                 x: 0, y: 0
             },
-            visibility: "visible"
+            visibility: "hidden",
+            resultsCount: 0,
+            currentResult:0,
+            cardPosition: null,
+            inital: true,
+            Header: null,
+            Rating: null, 
+            IMG: null,
         })
+        console.log(this.props)
     }
     handleD(e, ui) {
         const {x, y} = this.state.deltaPosition;
@@ -30,45 +38,109 @@ export class Cards extends Component {
             y: y + ui.deltaY,
           }
         });
-        this.completeSwipe() 
+       
       }
 
+      handleSTOP(){ 
+        this.completeSwipe() 
+        this.setState({
+        deltaPosition: {
+            x: 0, y: 0
+        },
+      })}
+
     completeSwipe(){
-        console.log("MADE IT")
-        if(this.state.deltaPosition.x>100){
+        if(Math.abs(this.state.deltaPosition.x)>100 ){
+            if(this.state.deltaPosition.x>0){ 
+                this.setState({
+                    countRight: this.state.countRight+1 
+                })
+            }else { 
+                this.setState({
+                    countLeft: this.state.countLeft+1 
+                })
+            }
+
+
             this.setState({
-                visibility: "hidden"
+                visibility: "hidden",
             })
+            if(this.state.currentResult<this.props.results.length-1){
+                this.setState({
+                    resultsCount: this.state.resultsCount+1 ,
+                    deltaPosition: {
+                        x: 0, y: 0
+                    },
+                    cardPosition: {x: 100, y: 100}
+                })
+                this.setData() 
+                this.setState({
+                    cardPosition: null,
+                    visibility: "visible",
+                    currentResult: this.state.resultsCount,       
+                })
+            }
+            else {
+                // LOAD RESULTS
+            }
+
+
         }
         else { 
-     
+            console.log("MADE IT")
+            this.setState({
+                cardPosition: {x: 100, y: 100}
+            })
         }
     }
 
+    setData(){ 
+        this.setState({ 
+            Header: this.props.results[this.state.resultsCount].name,
+            Rating: this.props.results[this.state.resultsCount].rating,
+            IMG: this.props.results[this.state.resultsCount].photoReference,
+            currentResult: this.state.resultsCount
+        })
+    }
+
 render() { 
+    if(this.props.results.length!=0 && this.state.visibility=="hidden")
+    {
+        this.setState({
+            visibility: "visible"
+        })
+        if(this.state.inital){
+            this.setData() 
+            this.setState({
+                inital: false
+            })
+        }
+    }
     
     const deltaPosition = this.state.deltaPosition;
     return (
     <div className= "BOX">
       X: {this.state.deltaPosition.x}
       Y: {this.state.deltaPosition.y}
+      LeftCount: {this.state.countLeft}
+      RightCount: {this.state.countRight}
       <Draggable
         className= "B1"
         axis="x"
         handle=".handle"
         defaultPosition={{x: 100, y: 100}}
-        position={null}
+        position={this.state.cardPosition}
         grid={[25, 25]}
         onStart={this.handleStart}
         onDrag={this.handleD.bind(this)}
-        onStop={this.handleStop}>
+        onStop={this.handleSTOP.bind(this)}>
         <div>
           <div className="handle">
           <Card className={"Card-"+this.state.visibility}>
           <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
           <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardTitle>{this.state.Header}</CardTitle>
+          <CardSubtitle>Rating: {this.state.Rating}</CardSubtitle>
           <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
           <div>x: {deltaPosition.x.toFixed(0)}, y: {deltaPosition.y.toFixed(0)}</div>          </CardBody>
           </Card>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { EHOSTUNREACH } from 'constants';
 import "./api.css"
+import {Cards} from "./Cards"
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
@@ -86,17 +87,18 @@ export class API extends React.Component {
               const resultsJSON = JSON.parse(body)
 
               const results= resultsJSON.results
-              console.log(results)
+              this.setState({
+                results: []
+              })
               Object.values(results).forEach(function(result){
                 var ref= "CmRaAAAAiJXePWe2z4gmIfMTlehvhKrzDWDSLt3qpzNTTb6ePG09O_9McUVlJqbCtwAtEsQShc3XPENqtszlszeFfAm5SlNQMqMpTblxfBHqkF5nOTxpmdrndfWTgeNLrYH3w99nEhCHIJhs2a4Ssv9xlRHz_7BgGhTSCIlnGXCRiDvvqu1PDOfl6_dbKg"
                 if(result.photos!=undefined){
                   ref= result.photos[0].photo_reference
                 }
-                output= output.concat({"name":result.name, "rating":result.rating, "photoReference": ref })
-              })
               this.setState({
-                results: output
+                results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref })
               })
+            }.bind(this))
             }
             }.bind(this)
           )
@@ -127,9 +129,7 @@ export class API extends React.Component {
         }, function(err, res, body) {
           if (err) {
             console.error(err);
-          } else {
-            console.log(body)
-        }})
+          }})
       this.GMapsNearby()
       }
           
@@ -194,7 +194,7 @@ export class API extends React.Component {
 
 	render(){
     const deltaPosition = this.state.deltaPosition;
-
+    var resultsParser= this.state.results
 	return(
     <div> 
       <h1> Google Maps </h1>
@@ -213,36 +213,9 @@ export class API extends React.Component {
           <input type="text" value={this.state.userRadius} onChange={this.handleChangeRadius.bind(this)}/> 
         </label>  
         <button onClick= {this.handleSubmitRadius.bind(this)}>Submit</button> 
-        
-        {console.log("HELLO",this.state.results)}
-        
-        
-       {this.state.results.map(i => { return(
-       
-      <Draggable
-        axis="x"
-        handle=".handle"
-        defaultPosition={{x: 100, y: 100}}
-        position={null}
-        grid={[25, 25]}
-        onStart={this.handleStart}
-        onDrag={this.handleD.bind(this)}
-        onStop={this.handleStop}>
-        
-        <div>
-        <Card className={"Card-"+this.state.visibility}>
-          <CardImg className= "Image" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + i['photoReference']+ "&key="+this.state.key}/>
-          <CardBody>
-          <CardTitle>Name: {i["name"]}</CardTitle>
-          <CardSubtitle>Rating:{i["rating"]}</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                   
-          </CardBody>
-          </Card>
-          </div>
-        
-      </Draggable>
+      
+    <Cards results={resultsParser}/> 
 
-        )})}
-    </div> 
+
+  </div>     
 )}}

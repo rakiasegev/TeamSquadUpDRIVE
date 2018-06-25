@@ -3,6 +3,14 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
 import './Cards.css'
+import * as firebase from 'firebase';
+var config = {
+  apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
+  authDomain: "swiperrrrrr.firebaseapp.com",
+  databaseURL: "https://swiperrrrrr.firebaseio.com",
+  storageBucket: "swiperrrrrr.appspot.com",
+};
+
 
 export class Cards extends Component {
     constructor(props){
@@ -46,17 +54,30 @@ export class Cards extends Component {
 
     completeSwipe(){
         if(Math.abs(this.state.deltaPosition.x)>100 ){
+            var restaurantName=this.state.Header
+            const ResultsRef = firebase.database().ref('Results').child(restaurantName)
+
             if(this.state.deltaPosition.x>0){ 
                 this.setState({
                     countRight: this.state.countRight+1 
                 })
-            }else { 
+            ResultsRef.once("value", function(snapshot){
+                var count=snapshot.val().right
+                console.log(count)
+                var updates = {}
+                updates['right']=count+1
+                ResultsRef.update(updates)
+                })}
+            else { 
                 this.setState({
                     countLeft: this.state.countLeft+1 
                 })
+                ResultsRef.once("value",function(snapshot){
+                    var count=snapshot.val().left
+                    const updates = {}    
+                    updates['left']= count + 1
+                    ResultsRef.update(updates)})
             }
-
-
             this.setState({
                 visibility: "hidden",
             })

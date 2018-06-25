@@ -24,9 +24,6 @@ class App extends Component {
         <Link to="/login">Home</Link>
       </p>
       <p>
-        <Link to="/api">Google Maps</Link>
-      </p>
-      <p>
         <Link to="/weatherapi">Weather</Link>
       </p>
       <p>

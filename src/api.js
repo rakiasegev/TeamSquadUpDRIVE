@@ -6,6 +6,16 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
 import logo from './logo.png';
+import * as firebase from 'firebase';
+
+var config = {
+  apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
+  authDomain: "swiperrrrrr.firebaseapp.com",
+  databaseURL: "https://swiperrrrrr.firebaseio.com",
+  storageBucket: "swiperrrrrr.appspot.com",
+};
+firebase.initializeApp(config);
+
 
 const loginStyles = {
   width: "90%",
@@ -111,10 +121,10 @@ export class API extends React.Component {
               this.setState({
                 results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref }),
               })
-             
+            this.firebaseResult()
             }.bind(this)
           )
-          this.props.sendData(this.state.results)
+           this.props.sendData(this.state.results)
         }
         }.bind(this)
       )
@@ -198,14 +208,30 @@ export class API extends React.Component {
     handleSubmitRadius(event){ 
       event.preventDefault();
     }
-
+ 
     handleChangeRadius(event){ 
       this.setState({userRadius: event.target.value});   
       }
       
-   sendData() { 
-     return this.state.results
-   }
+    firebaseResult(){ 
+      const ResultsRef = firebase.database().ref('Results')
+      
+
+      this.state.results.map(i =>{
+          var name= this.replaceAll("."," ",i.name)
+          console.log(name)
+          const result = {
+              right: 0,
+              left:0
+          }
+          ResultsRef.child(name).set(result)
+          }) 
+      }
+  
+    replaceAll (search, replacement, s) {
+      var target = s;
+      return target.split(search).join(replacement);
+  }
 
 	render(){
     const deltaPosition = this.state.deltaPosition;

@@ -14,7 +14,7 @@ var config = {
   databaseURL: "https://swiperrrrrr.firebaseio.com",
   storageBucket: "swiperrrrrr.appspot.com",
 };
-firebase.initializeApp(config);
+//firebase.initializeApp(config);
 
 
 const loginStyles = {

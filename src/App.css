@@ -177,19 +177,13 @@ button {
 .header {
   color: #fff;
   background-color: #3b5998;
-<<<<<<< HEAD
-=======
   box-shadow: 0 5px 3px -3px #3b6698;
->>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
 }
 
 .header2 {
   color: #fff;
   background-color: #dd4b39;
-<<<<<<< HEAD
-=======
   box-shadow: 0 5px 3px -3px #d85645;
->>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
 }
 
 .App-logo2 {
@@ -204,12 +198,9 @@ button {
 
 button {
   border-top: solid 5px rgba(255,255,255);
-<<<<<<< HEAD
   border-right: solid 5px rgba(255,255,255);
   border-bottom: solid 2px rgba(255,255,255);
   border-left: solid 5px rgba(255,255,255);
-=======
->>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
   padding: 9px 12px;
   margin: 0 2px;
   border-radius: 10px;
@@ -221,15 +212,12 @@ button {
   color: #fff;
   font-weight: 100; 
   float: center;
-<<<<<<< HEAD
-=======
           box-shadow: 0 5px 3px -3px #38abb4;
 }
 .effect1{
   -webkit-box-shadow: 0 10px 6px -6px #777;
      -moz-box-shadow: 0 10px 6px -6px #777;
           box-shadow: 0 10px 6px -6px #777;
->>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
 }
 
 button2 {

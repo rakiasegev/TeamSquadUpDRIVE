@@ -5,10 +5,23 @@ import {Cards} from "./Cards"
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
+import logo from './logo.png';
+
+const loginStyles = {
+  width: "90%",
+  maxWidth: "315px",
+  maxHeight: "315px",
+  margin: "20px auto",
+  borderRadius: "5px",
+  padding: "20px",
+  background: "white",
+  color: "black",
+  boxshadow: "10px 10px gray",
+}
 
 export class API extends React.Component {
-    constructor() { 
-        super() 
+    constructor(props) { 
+        super(props) 
         this.state= {
             counter:0 , 
             generatedCard: null,
@@ -96,13 +109,16 @@ export class API extends React.Component {
                   ref= result.photos[0].photo_reference
                 }
               this.setState({
-                results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref })
+                results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref }),
               })
-            }.bind(this))
-            }
+             
             }.bind(this)
           )
+          this.props.sendData(this.state.results)
         }
+        }.bind(this)
+      )
+      }
 
 
         getDeviceLocation(){
@@ -178,11 +194,8 @@ export class API extends React.Component {
     handleSubmitLocation(event) {
         this.GMapsAPI(this.state.value)
         event.preventDefault();
-
-        
       }
     handleSubmitRadius(event){ 
-
       event.preventDefault();
     }
 
@@ -190,17 +203,22 @@ export class API extends React.Component {
       this.setState({userRadius: event.target.value});   
       }
       
-  
+   sendData() { 
+     return this.state.results
+   }
 
 	render(){
     const deltaPosition = this.state.deltaPosition;
     var resultsParser= this.state.results
 	return(
-    <div> 
+      <div className="App-background">
+            <img src={logo} className="App-logo2" alt="logo" />
+            <div style={loginStyles} className="effect1">
       <h1> Google Maps </h1>
+      <hr style={{marginTop: "10px", marginBottom: "10px"}} />
       <p>
-      <label>
-        Location: 
+      <label> 
+      Location: 
         <input type="text" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
         <button onClick={this.handleSubmitLocation.bind(this)}>Submit</button>
         <button onClick={ this.getDeviceLocation.bind(this) }> Use Device Location </button> 
@@ -208,14 +226,14 @@ export class API extends React.Component {
       </label>
       </p> 
       
-        <label>
+        <label> 
           Radius:
           <input type="text" value={this.state.userRadius} onChange={this.handleChangeRadius.bind(this)}/> 
         </label>  
         <button onClick= {this.handleSubmitRadius.bind(this)}>Submit</button> 
-      
-    <Cards results={resultsParser}/> 
 
-
+  </div>
   </div>     
 )}}
+
+export default API

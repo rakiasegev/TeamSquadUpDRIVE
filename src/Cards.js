@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import querystring from 'querystring';
-import ReactSwipe from 'react-swipe';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
-
 import './Cards.css'
-
 
 export class Cards extends Component {
     constructor(props){
@@ -120,9 +115,9 @@ render() {
     const deltaPosition = this.state.deltaPosition;
     return (
     <div className= "BOX">
-      X: {this.state.deltaPosition.x}
-      Y: {this.state.deltaPosition.y}
-      LeftCount: {this.state.countLeft}
+      X: {this.state.deltaPosition.x},   
+      Y: {this.state.deltaPosition.y},  
+      LeftCount: {this.state.countLeft},  
       RightCount: {this.state.countRight}
       <Draggable
         className= "B1"
@@ -137,7 +132,7 @@ render() {
         <div>
           <div className="handle">
           <Card className={"Card-"+this.state.visibility}>
-          <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+          <CardImg top width="100%" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + this.state.IMG+ "&key="+this.state.key } alt="Card image cap" />
           <CardBody>
           <CardTitle>{this.state.Header}</CardTitle>
           <CardSubtitle>Rating: {this.state.Rating}</CardSubtitle>

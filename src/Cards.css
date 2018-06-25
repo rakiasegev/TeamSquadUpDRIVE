@@ -9,6 +9,6 @@
 }
 
 .BOX { 
-    height: 1000px; 
-    width: 1000px;
+    border-top: solid 2px white;
+    padding: 7px 5px;
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.png';
 import './App.css';
 import { Router, browserHistory, Route, Link } from 'react-router';
-
 class App extends Component {
   constructor() { 
     super() 
@@ -22,7 +21,7 @@ class App extends Component {
         This is the {this.state.title} page.
       </p>
       <p>
-        <Link to="/">Home</Link>
+        <Link to="/login">Home</Link>
       </p>
       <p>
         <Link to="/api">Google Maps</Link>
@@ -31,7 +30,7 @@ class App extends Component {
         <Link to="/weatherapi">Weather</Link>
       </p>
       <p>
-        <Link to="/Cards">Cards</Link>
+        <Link to="/SwiperNoSwiping">Swiper</Link>
       </p>
     </div>
   )}}

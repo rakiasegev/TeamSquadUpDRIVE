@@ -1,0 +1,14 @@
+.Card-hidden{ 
+    width: 25%; 
+    height: 15%;
+    visibility: hidden;
+}
+.Card-visible{
+    width: 25%; 
+    height: 15%;
+}
+
+.BOX { 
+    border-top: solid 2px white;
+    padding: 7px 5px;
+}

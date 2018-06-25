@@ -1,6 +1,7 @@
 //this is the vegas branch
 import React, { Component } from 'react';
 import './App.css';
+<<<<<<< HEAD
 import firebase, {auth, provider, facebookProvider} from './firebase.js';
 import logo from './logo.png'
 import facebook from './facebook.png'
@@ -27,6 +28,9 @@ const loginStylesOuter = {
   background: "#38abb4",
 }
 
+=======
+import { Router, browserHistory, Route, Link } from 'react-router';
+>>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
 class App extends Component {
   constructor() {
     super();
@@ -50,6 +54,7 @@ class App extends Component {
     });
   }
 
+<<<<<<< HEAD
   //when signout method is called, we remove the user from our app's state
   logout(){
     auth.signOut()
@@ -59,6 +64,29 @@ class App extends Component {
       });
     });
   }
+=======
+  render() { 
+    return (
+  <div className="App">
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>{this.state.title}</h1>
+      </div>
+      <p className="App-intro">
+        This is the {this.state.title} page.
+      </p>
+      <p>
+        <Link to="/login">Home</Link>
+      </p>
+      <p>
+        <Link to="/weatherapi">Weather</Link>
+      </p>
+      <p>
+        <Link to="/SwiperNoSwiping">Swiper</Link>
+      </p>
+    </div>
+  )}}
+>>>>>>> 0cf3f00af09986f5c58df15c4993d3bcd56948ed
 
   /*
   -signInWithPopup will trigger a popup login option to sign in with a Google account

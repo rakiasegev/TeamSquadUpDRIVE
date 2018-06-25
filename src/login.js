@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect} from 'react-router-dom'
-import firebase, {auth, provider} from './firebase' 
+import firebase, {auth, provider,facebookProvider} from './firebase' 
 import logo from './logo.png';
 import facebook from './facebook.png'
 import google from './google.png'

@@ -27,7 +27,7 @@ const loginStylesOuter = {
 }
 
 
-export class login extends Component {
+export class login extends React.Component {
     constructor(){
         super();
         //this.authWithFacebook = this.authWithFacebook.bind(this)
@@ -100,7 +100,7 @@ export class login extends Component {
             <div style={loginStyles}>
            
             <button style={{width: "100%"}} type="submit" className="header"> <img src={facebook}  /> Login with Facebook </button>
-            <button style={{width: "100%"}} type="submit" className="header2"> <img src={google} onClick={this.login} /> Login with Google</button>
+            <button style={{width: "100%"}} type="submit" className="header2" onClick={this.login}> <img src={google} onClick={this.login} /> Login with Google</button>
             <hr style={{marginTop: "10px", marginBottom: "10px"}} />
             <form onSubmit={(event) => this.login}>
               <div style={{marginBottom: "20px"}} className="pt-callout pt-icon-info-sign">

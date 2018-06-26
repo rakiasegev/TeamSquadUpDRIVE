@@ -8,6 +8,7 @@ import {SwiperNoSwiping} from './SwiperNoSwiping'
 
 const loginStyles = {
   width: "90%",
+  maxWidth: "400px",
   margin: "20px auto",
   borderRadius: "5px",
   padding: "20px",
@@ -97,7 +98,6 @@ class App extends Component {
                 <button onClick={this.login}>Login In</button>
               }*/}
         <div style={loginStyles} className="effect1">              
-            </div>
             
         {this.state.user ?
           <div>
@@ -125,18 +125,12 @@ class App extends Component {
                 <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Create Account</button>
                 <hr style={{marginTop: "10px", marginBottom: "10px"}} />
                 </div>
-          <div className='wrapper'>
-              <p>You must be logged in to start group decisions.</p>
-          </div>
           </form>
           </section>
-        }
 
         <div className='container'>
           <section className='add-item'>
                 <form onSubmit={this.handleSubmit}>
-                <input type="text" name="username" placeholder="Username" />
-                <input type="text" name="currentItem" placeholder="Password" />
                 {this.state.user?
                <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} /> Logout of Facebook </button>
                :
@@ -150,6 +144,7 @@ class App extends Component {
                 </form>
           </section>
         </div>
+      </div>
       </div>
     )} 
     else {

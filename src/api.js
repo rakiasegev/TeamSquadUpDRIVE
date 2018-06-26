@@ -13,6 +13,7 @@ var config = {
 
 const loginStyles = {
   width: "90%",
+  maxWidth: "400px",
   margin: "20px auto",
   borderRadius: "5px",
   padding: "20px",

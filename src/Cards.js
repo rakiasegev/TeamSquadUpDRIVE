@@ -5,8 +5,7 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
 import './Cards.css'
-import {db} from './firebase' 
-
+import firebase from 'firebase'
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
   authDomain: "swiperrrrrr.firebaseapp.com",
@@ -62,7 +61,7 @@ export class Cards extends Component {
         // Updates the values in firebase (assuming firebase has a list of results with list of results)
         if(Math.abs(this.state.deltaPosition.x)>100 ){ // Checks if swipe delta > 100
             var restaurantName= this.replaceAll(".", " ",this.state.Header)
-            const ResultsRef = db.ref('Results').child(restaurantName)
+            const ResultsRef = firebase.database().ref('Results').child(restaurantName)
 
             if(this.state.deltaPosition.x>0){ // Swipe Right
                 this.setState({
@@ -96,7 +95,7 @@ export class Cards extends Component {
                     deltaPosition: {
                         x: 0, y: 0
                     },
-                    cardPosition: {x: 100, y: 100}
+                    cardPosition: {x: 0, y: 0}
                 })
                 this.setData() // Updating card info
                 this.setState({

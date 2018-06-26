@@ -1,8 +1,9 @@
 // This file brings everything together by calling API and Cards
 import React, { Component } from 'react';
 import { Router, browserHistory, Route, Link } from 'react-router';
-import {API} from './api'
-import {Cards} from './Cards'
+import {API} from './api';
+import {Cards} from './Cards';
+import logo from './logo.png';
 export class SwiperNoSwiping extends Component {
   
   constructor(props) { 
@@ -20,7 +21,7 @@ export class SwiperNoSwiping extends Component {
   }
 
 
-  render() { 
+  render() {
     var out = null
     if(this.state.results==null){
       // As long as no results are loaded, it will keep displaying the location page
@@ -28,6 +29,11 @@ export class SwiperNoSwiping extends Component {
     }
     else {
       // Once results are loaded, the cards are loaded
-      return (<Cards results={this.state.results}/> )}
+      return (
+        <div>
+      <img src={logo} className="App-logo2" alt="logo"/> 
+      <Cards results={this.state.results}/> 
+      </div>
+    )}
     }}
 export default SwiperNoSwiping;

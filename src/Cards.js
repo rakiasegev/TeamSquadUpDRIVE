@@ -96,7 +96,7 @@ export class Cards extends Component {
                     deltaPosition: {
                         x: 0, y: 0
                     },
-                    cardPosition: {x: 100, y: 100}
+                    cardPosition: {x: 0, y: 0}
                 })
                 this.setData() // Updating card info
                 this.setState({

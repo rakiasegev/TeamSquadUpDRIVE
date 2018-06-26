@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import "./api.css"
 import logo from './logo.png';
 import * as firebase from 'firebase';
-
+import gps from './gps.png'
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
   authDomain: "swiperrrrrr.firebaseapp.com",
@@ -15,8 +15,6 @@ var config = {
 
 const loginStyles = {
   width: "90%",
-  maxWidth: "315px",
-  maxHeight: "315px",
   margin: "20px auto",
   borderRadius: "5px",
   padding: "20px",
@@ -222,15 +220,14 @@ export class API extends React.Component {
       <div className="App-background">
             <img src={logo} className="App-logo2" alt="logo" />
             <div style={loginStyles} className="effect1">
-      <h1> Google Maps </h1>
+      <h2> Enter Location to Search</h2>
       <hr style={{marginTop: "10px", marginBottom: "10px"}} />
       <p>
       <label> 
       Location: 
-        <input type="text" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
+        <input className="location_input" type="text" placeholder="Claremont" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
         <button onClick={this.handleSubmitLocation.bind(this)}>Submit</button>
-        <button onClick={ this.getDeviceLocation.bind(this) }> Use Device Location </button> 
-        
+        <button onClick={ this.getDeviceLocation.bind(this) }> <img src={gps}/>  Use Device Location </button> 
       </label>
       </p> 
   </div>

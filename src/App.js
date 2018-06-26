@@ -6,15 +6,14 @@ import logo from './logo.png'
 import facebook from './facebook.png'
 import google from './google.png'
 import {SwiperNoSwiping} from './SwiperNoSwiping'
+
 const loginStyles = {
   width: "90%",
-  maxWidth: "315px",
   margin: "20px auto",
-  border: "2px solid #38abb4",
   borderRadius: "5px",
   padding: "20px",
   background: "white",
-  color: "black"
+  color: "black",
 }
 
 class App extends Component {
@@ -139,19 +138,17 @@ class App extends Component {
   render() {
   if(!this.state.user){
     return (
-    
-      <div className='App'>
-            <div className="App-header">
-            <img src={logo} className="App-logo" alt= "logo" />
+    <div className="App-background">
+            <img src={logo} className="App-logo2" alt="logo" />
               <h1>{this.state.title}</h1>
-            </div>
             {/*}
               {
                 this.state.user?
                 <button onClick={this.logout}>Log Out </button>
                 :
                 <button onClick={this.login}>Login In</button>
-              }*/}              
+              }*/}
+        <div style={loginStyles} className="effect1">              
         {this.state.user ?
           <div>
             <div className='user-profile'>
@@ -159,12 +156,11 @@ class App extends Component {
             </div>
           </div>
           :
-          <div className='wrapper'>
+          <div className='text_input'>
+          <h5>Welcome to SquadUp</h5>
               <p>You must be logged in to see the group events.</p>
           </div>
-      }
-
-        <div className='container'>
+      }     
           <section className='add-item'>
                 <form onSubmit={this.handleSubmit}>
                 {/*this is where we need to modify to math current website
@@ -172,8 +168,13 @@ class App extends Component {
                   <input type="text" name="currentItem" placeholder="What are you bringing?" onChange={this.handleChange} value={this.state.currentItem} />
                   <button>Add Item</button>
                 */}
-                <input type="text" name="username" placeholder="Username" />
-                <input type="text" name="currentItem" placeholder="Password" />
+                <div style={{textAlign: "center"}} className="pt-callout pt-icon-info-sign">
+                <input style={{width: "98%"}} type="text" name="username" placeholder="Username" />
+                <input style={{width: "98%"}} type="text" name="currentItem" placeholder="Password" />
+                <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Login to SquadUp</button>
+                <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Create Account</button>
+                <hr style={{marginTop: "10px", marginBottom: "10px"}} />
+                </div>
                 {this.state.user?
                <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} /> Logout of Facebook </button>
                :
@@ -183,7 +184,7 @@ class App extends Component {
               <button style={{width: "100%"}} className="header2" onClick = {this.logout}> <img src={google} onClick={this.logout} /> Logout of Google</button>
                 :
               <button style={{width: "100%"}} className="header2" onClick={this.login}> <img src={google} onClick={this.login} /> Login with Google</button>
-               }
+               }              
                 </form>
           </section>
           {/*}

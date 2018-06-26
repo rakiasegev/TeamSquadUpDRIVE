@@ -5,14 +5,14 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import Draggable from 'react-draggable'; // The default
 import './Cards.css'
-import * as firebase from 'firebase';
+import {db} from './firebase' 
+
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
   authDomain: "swiperrrrrr.firebaseapp.com",
   databaseURL: "https://swiperrrrrr.firebaseio.com",
   storageBucket: "swiperrrrrr.appspot.com",
 };
-
 
 export class Cards extends Component {
     constructor(props){
@@ -50,7 +50,7 @@ export class Cards extends Component {
 
       handleSTOP(){ 
         // Handles the release of the card after being dragged. 
-        this.completeSwipe() 
+        this.completeSwipe()
         this.setState({
         deltaPosition: {
             x: 0, y: 0
@@ -61,8 +61,8 @@ export class Cards extends Component {
         // registers the direction in which the swipe took place. 
         // Updates the values in firebase (assuming firebase has a list of results with list of results)
         if(Math.abs(this.state.deltaPosition.x)>100 ){ // Checks if swipe delta > 100
-            var restaurantName=this.state.Header
-            const ResultsRef = firebase.database().ref('Results').child(restaurantName)
+            var restaurantName= this.replaceAll(".", " ",this.state.Header)
+            const ResultsRef = db.ref('Results').child(restaurantName)
 
             if(this.state.deltaPosition.x>0){ // Swipe Right
                 this.setState({
@@ -107,6 +107,7 @@ export class Cards extends Component {
             }
             else {
                 // LOAD RESULTS- all swipes are completed and the results page is ready to be loaded. 
+                this.props.DisplayResults()
             }
 
 
@@ -118,6 +119,11 @@ export class Cards extends Component {
                 cardPosition: {x: 100, y: 100}
             })
         }
+    }
+
+    replaceAll (search, replacement, s) {
+        var target = s;
+        return target.split(search).join(replacement);
     }
 
     setData(){ 

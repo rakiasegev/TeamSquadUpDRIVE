@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import "./api.css"
 import logo from './logo.png';
-import * as firebase from 'firebase';
+import {db} from './firebase' 
 
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
@@ -10,8 +10,6 @@ var config = {
   databaseURL: "https://swiperrrrrr.firebaseio.com",
   storageBucket: "swiperrrrrr.appspot.com",
 };
-//firebase.initializeApp(config);
-
 
 const loginStyles = {
   width: "90%",
@@ -125,8 +123,9 @@ export class API extends React.Component {
               this.setState({
                 results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref }),
               })
+            this.firebaseResult()
             }.bind(this))
-          this.firebaseResult() // Saves the result in firebase (for the list of results to obtain the )  
+           // Saves the result in firebase (for the list of results to obtain the )  
           this.props.sendData(this.state.results)   //Sends data to SwiperNoSwiping
           }     
         }.bind(this))
@@ -199,15 +198,17 @@ export class API extends React.Component {
    
     firebaseResult(){
       // Stores the results in the results state to the firebase database 
-      const ResultsRef = firebase.database().ref('Results')
+      const ResultsRef = db.ref("Results")
+      ResultsRef.set("null")
+      console.log(ResultsRef)
       this.state.results.map(i =>{
         var name= this.replaceAll("."," ",i.name)
         console.log(name)
-        const result = {
+        const branches = {
             right: 0,
             left:0
         }
-      ResultsRef.child(name).set(result)
+      ResultsRef.child(name).set(branches)
       }) 
       }
   

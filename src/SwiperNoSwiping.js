@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { Router, browserHistory, Route, Link } from 'react-router';
 import {API} from './api'
 import {Cards} from './Cards'
+import {DisplayResults} from './displayResults'
 export class SwiperNoSwiping extends Component {
   
   constructor(props) { 
     super(props) 
     this.state={ 
-         results: null
+         results: null,
+         readyDisplayResults: false 
     }
   }
 
@@ -19,6 +21,12 @@ export class SwiperNoSwiping extends Component {
       })
   }
 
+  display() {
+    this.setState({
+      readyDisplayResults: true
+    })
+  }
+
 
   render() { 
     var out = null
@@ -27,7 +35,12 @@ export class SwiperNoSwiping extends Component {
       return (<API sendData= {this.getData.bind(this)} /> )
     }
     else {
+      if(this.state.readyDisplayResults==false){
       // Once results are loaded, the cards are loaded
-      return (<Cards results={this.state.results}/> )}
-    }}
+      return (<Cards results={this.state.results} DisplayResults={this.display.bind(this)}/> )
+      }
+      else {
+        return (<DisplayResults results={this.state.results}/>)
+      }
+    }}}
 export default SwiperNoSwiping;

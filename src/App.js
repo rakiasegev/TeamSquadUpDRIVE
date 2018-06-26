@@ -1,7 +1,6 @@
-//this is the vegas branch
 import React, { Component } from 'react';
 import './App.css';
-import firebase, {auth, provider, facebookProvider} from './firebase.js';
+import {auth, provider, facebookProvider} from './firebase.js';
 import logo from './logo.png'
 import facebook from './facebook.png'
 import google from './google.png'
@@ -20,9 +19,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      //currentItem: '',
-      //username: '',
-      items: [], 
       user: null 
     }
     this.handleChange = this.handleChange.bind(this);
@@ -76,21 +72,7 @@ class App extends Component {
   handleSubmit(e) {
     //prevents the page from refreshing
     e.preventDefault();
-    //carves out a space on our database where we store the items
-    const itemsRef = firebase.database().ref('items');
-    //grab the item the user types and packs it into an item object
-    /*
-    const item = {
-      title: this.state.currentItem,
-      user: this.state.username
-    }
-   
-    //sends a copy of our object so that it could be store in firebase
-    itemsRef.push(item);
-     */
-    //so inputs are cleared after they are added
-    this.setState({
-      currentItem: '',
+      this.setState({
       username: ''
     });
   }
@@ -99,42 +81,8 @@ class App extends Component {
       if (user) {
         this.setState({ user });
       } 
-    });    
+    });}    
     
-    /*
-    instantiate a new array and populate it with results...
-    snapshot: the callback that provides an overview of all the items ref of the database
-    .val(): the method that grabs a list of all the properties instead of our object items
-      -this value fires automatically on two occasions
-        -any time a new item is added or removed
-        -the first time the event listener is attached
-    */
-    const itemsRef = firebase.database().ref('items');
-    itemsRef.on('value', (snapshot) => {
-      let items = snapshot.val();
-      let newState = [];
-      for (let item in items) {
-        newState.push({
-          id: item,
-          title: items[item].title,
-          user: items[item].user
-        });
-      }
-      this.setState({
-        items: newState
-      });
-    });
-  }
-
-  /* this method will need to be passed a unique key that serves as the 
-      identifier for each one of the items inside of our Firebase database
-    MAKE SURE TO SET BUTTON KEY TO THIS ONCLICK ACTION!!!!  
-  */
-
-  removeItem(itemId) {
-    const itemRef = firebase.database().ref(`/items/${itemId}`);
-    itemRef.remove();
-  }
   render() {
   if(!this.state.user){
     return (
@@ -149,6 +97,8 @@ class App extends Component {
                 <button onClick={this.login}>Login In</button>
               }*/}
         <div style={loginStyles} className="effect1">              
+            </div>
+            
         {this.state.user ?
           <div>
             <div className='user-profile'>
@@ -175,6 +125,18 @@ class App extends Component {
                 <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Create Account</button>
                 <hr style={{marginTop: "10px", marginBottom: "10px"}} />
                 </div>
+          <div className='wrapper'>
+              <p>You must be logged in to start group decisions.</p>
+          </div>
+          </form>
+          </section>
+        }
+
+        <div className='container'>
+          <section className='add-item'>
+                <form onSubmit={this.handleSubmit}>
+                <input type="text" name="username" placeholder="Username" />
+                <input type="text" name="currentItem" placeholder="Password" />
                 {this.state.user?
                <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} /> Logout of Facebook </button>
                :
@@ -187,28 +149,8 @@ class App extends Component {
                }              
                 </form>
           </section>
-          {/*}
-          <section className='display-item'>
-              <div className="wrapper">
-                <ul>
-                  {this.state.items.map((item) => {
-                    return (
-                      <li key={item.id}>
-                        <h3>{item.title}</h3>
-                        <p>brought by: {item.user}
-                          <button onClick={() => this.removeItem(item.id)}>Remove Item</button>
-                        </p>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-          </section>
-          */}
         </div>
       </div>
-      
-    
     )} 
     else {
       return (<SwiperNoSwiping/>)

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import App from './App';
 import {weatherapi} from './weatherapi'; 
 import {SwiperNoSwiping} from './SwiperNoSwiping'
-import { Router, browserHistory, Route, Link } from 'react-router';
+import { Router, browserHistory, Route} from 'react-router';
 
 render((
   <Router history={browserHistory}>
@@ -13,4 +13,3 @@ render((
     <Route exact path="/SwiperNoSwiping" component= {SwiperNoSwiping} />
   </Router>
 ), document.getElementById('root'))
-

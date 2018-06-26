@@ -38,10 +38,10 @@ export class SwiperNoSwiping extends Component {
     else {
       if(this.state.readyDisplayResults==false){
       // Once results are loaded, the cards are loaded
-      <div>
+      return(<div>
       <img src={logo} className="App-logo2" alt="logo"/> 
       <Cards results={this.state.results} DisplayResults={this.display.bind(this)}/> 
-      </div>
+      </div>)
       }
       else {
         return (<DisplayResults results={this.state.results}/>)

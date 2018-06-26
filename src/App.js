@@ -5,6 +5,7 @@ import logo from './logo.png'
 import facebook from './facebook.png'
 import google from './google.png'
 import {SwiperNoSwiping} from './SwiperNoSwiping'
+import alternate from './alternate.png'
 
 const loginStyles = {
   width: "90%",
@@ -102,7 +103,7 @@ class App extends Component {
         {this.state.user ?
           <div>
             <div className='user-profile'>
-              <img src={this.state.user.photoURL} />
+              <img src={this.state.user.photoURL} alt={alternate} />
             </div>
           </div>
           :
@@ -132,14 +133,14 @@ class App extends Component {
           <section className='add-item'>
                 <form onSubmit={this.handleSubmit}>
                 {this.state.user?
-               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} /> Logout of Facebook </button>
+               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} alt={facebook}/> Logout of Facebook </button>
                :
-               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.fblogin}> <img src={facebook} onClick = {this.fblogin} /> Login with Facebook </button>
+               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.fblogin}> <img src={facebook} onClick = {this.fblogin} alt={facebook} /> Login with Facebook </button>
                 }
                {this.state.user?
-              <button style={{width: "100%"}} className="header2" onClick = {this.logout}> <img src={google} onClick={this.logout} /> Logout of Google</button>
+              <button style={{width: "100%"}} className="header2" onClick = {this.logout}> <img src={google} onClick={this.logout} alt={google} /> Logout of Google</button>
                 :
-              <button style={{width: "100%"}} className="header2" onClick={this.login}> <img src={google} onClick={this.login} /> Login with Google</button>
+              <button style={{width: "100%"}} className="header2" onClick={this.login}> <img src={google} onClick={this.login} alt={google} /> Login with Google</button>
                }              
                 </form>
           </section>

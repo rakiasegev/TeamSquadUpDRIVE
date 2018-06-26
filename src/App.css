@@ -17,6 +17,10 @@
 
 }
 
+.tabBarContainer {
+  float: center;
+}
+
 .header {
   color: #fff;
   background-color: #3b5998;
@@ -116,4 +120,13 @@ form input{
   display: block;
   box-sizing: border-box;
   font-size: 18px;
+}
+
+.center{
+    width: 100%;
+    float: center;
+    display:block;
+    max-width: 500px;
+    text-align: center;
+    margin: 0 auto;
 }

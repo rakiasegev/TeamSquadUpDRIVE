@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import {auth, provider, facebookProvider} from './firebase.js';
-import logo from './logo.png'
-import facebook from './facebook.png'
-import google from './google.png'
-import {SwiperNoSwiping} from './SwiperNoSwiping'
-import alternate from './alternate.png'
+import logo from './logo.png';
+import facebook from './facebook.png';
+import google from './google.png';
+import {SwiperNoSwiping} from './SwiperNoSwiping';
+import alternate from './alternate.png';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import classnames from 'classnames';
+import home from './home.png';
+import group from './group.png';
 
 const loginStyles = {
   width: "90%",
@@ -21,13 +25,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null 
+      user: null ,
+      activeTab: '1'
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.fblogin = this.fblogin.bind(this);
+  }
+  
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
   
   //receives inputs from our inputs and updates the corresponding piece of state
@@ -88,9 +101,26 @@ class App extends Component {
   render() {
   if(!this.state.user){
     return (
-    <div className="App-background">
+      <div className="App-background">
             <img src={logo} className="App-logo2" alt="logo" />
               <h1>{this.state.title}</h1>
+    <div>
+      <Nav className="center" tabs>
+          <NavItem>
+            <NavLink className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.toggle('1'); }}
+            > <img src={home} onClick={this.home} responsive /></NavLink>
+      </NavItem> 
+      <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}> <img src={group} onClick={this.group} responsive />
+  
+            </NavLink>
+          </NavItem>
+      </Nav> 
+      <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
             {/*}
               {
                 this.state.user?
@@ -98,7 +128,7 @@ class App extends Component {
                 :
                 <button onClick={this.login}>Login In</button>
               }*/}
-        <div style={loginStyles} className="effect1">              
+        <div style={loginStyles}>              
             
         {this.state.user ?
           <div>
@@ -122,29 +152,44 @@ class App extends Component {
                 <div style={{textAlign: "center"}} className="pt-callout pt-icon-info-sign">
                 <input style={{width: "98%"}} type="text" name="username" placeholder="Username" />
                 <input style={{width: "98%"}} type="text" name="currentItem" placeholder="Password" />
-                <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Login to SquadUp</button>
-                <button style={{width: "100%"}} type="submit" className="btn btn-primary" value="Log In"> Create Account</button>
+                
+                <button style={{width: "100%", backgroundColor:"#38abb4", borderColor:"#38abb4"}} type="submit" className="btn btn-primary" value="Log In" block> Login to SquadUp</button>
+                <button style={{width: "100%", backgroundColor:"#38abb4", borderColor:"#38abb4", marginTop: "2%"}} type="submit" className="btn btn-primary" bsStyle="" value="Log In" block> Create Account</button>
                 <hr style={{marginTop: "10px", marginBottom: "10px"}} />
                 </div>
           </form>
           </section>
 
-        <div className='container'>
           <section className='add-item'>
                 <form onSubmit={this.handleSubmit}>
                 {this.state.user?
-               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} alt={facebook}/> Logout of Facebook </button>
+               <button style={{width: "100%", backgroundColor:"#3b6698", borderColor:"#3b6698", marginTop: "2%"}} className="btn btn-primary" type="submit" onClick = {this.logout}> <img src={facebook} onClick = {this.logout} alt={facebook}/> Logout of Facebook </button>
                :
-               <button style={{width: "100%"}} type="submit" className="header" onClick = {this.fblogin}> <img src={facebook} onClick = {this.fblogin} alt={facebook} /> Login with Facebook </button>
+               <button style={{width: "100%", backgroundColor:"#3b6698", borderColor:"#3b6698", marginTop: "2%"}} className="btn btn-primary" type="submit" onClick = {this.fblogin}> <img src={facebook} onClick = {this.fblogin} alt={facebook} /> Login with Facebook </button>
                 }
                {this.state.user?
-              <button style={{width: "100%"}} className="header2" onClick = {this.logout}> <img src={google} onClick={this.logout} alt={google} /> Logout of Google</button>
+              <button style={{width: "100%", backgroundColor:"#dd4b39", borderColor:"#dd4b39", marginTop: "2%"}} className="btn btn-primary" onClick = {this.logout}> <img src={google} onClick={this.logout} alt={google} responsive/> Logout of Google</button>
                 :
-              <button style={{width: "100%"}} className="header2" onClick={this.login}> <img src={google} onClick={this.login} alt={google} /> Login with Google</button>
+              <button style={{width: "100%", backgroundColor:"#dd4b39", borderColor:"#dd4b39", marginTop: "2%"}} className="btn btn-primary" onClick={this.login}> <img src={google} onClick={this.login} alt={google} responsive /> Login with Google</button>
                }              
                 </form>
           </section>
-        </div>
+      </div>
+
+      </TabPane>
+      <TabPane tabId="2">
+      <form onSubmit={this.handleSubmit}>
+      <div style={loginStyles}>  
+      <div style={{textAlign: "center"}} className="pt-callout pt-icon-info-sign">
+      <h5>Welcome to SquadUp</h5>
+      <p>Enter the shared group code to join the group</p>
+      <input style={{width: "98%"}} type="text" name="GroupCode" placeholder="Group Code" />
+      <button style={{width: "100%", backgroundColor:"#38abb4", borderColor:"#38abb4"}} type="submit" className="btn btn-primary" value="Log In" block> Join Group</button>
+      </div>
+      </div>
+      </form>
+       </TabPane>
+      </TabContent>
       </div>
       </div>
     )} 

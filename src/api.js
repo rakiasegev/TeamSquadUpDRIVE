@@ -223,11 +223,11 @@ export class API extends React.Component {
             <img src={logo} className="App-logo2" alt="logo" />
             <div style={loginStyles} className="effect1">
       <h2> Enter Location to Search</h2>
-      <hr style={{marginTop: "10px", marginBottom: "10px"}} />
+      <hr style={{marginTop: "10px", marginBottom: "10px", color: "#38abb4"}} />
       <p>
       <label> 
       Location: 
-        <input className="location_input" type="text" placeholder="Claremont" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
+        <input className="location_input" type="text" placeholder="City, Country" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
         <button onClick={this.handleSubmitLocation.bind(this)}>Submit</button>
         <button onClick={ this.getDeviceLocation.bind(this) }> <img src={gps}/>  Use Device Location </button> 
       </label>

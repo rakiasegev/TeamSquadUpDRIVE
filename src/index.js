@@ -4,6 +4,7 @@ import App from './App';
 import {weatherapi} from './weatherapi'; 
 import {SwiperNoSwiping} from './SwiperNoSwiping'
 import { Router, browserHistory, Route} from 'react-router';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 render((
   <Router history={browserHistory}>

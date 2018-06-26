@@ -4,6 +4,7 @@ import "./api.css"
 import logo from './logo.png';
 import * as firebase from 'firebase';
 
+
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
   authDomain: "swiperrrrrr.firebaseapp.com",

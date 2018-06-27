@@ -62,14 +62,12 @@ export class SwiperNoSwiping extends Component {
 
   render() {
     var out = null
-    //if(this.state.results==null){
-      if(false){
+    if(this.state.results==null){
     // As long as no results are loaded, it will keep displaying the location page
       return (<API sendData= {this.getData.bind(this)} sendGroupCode={this.sendGroupCode.bind(this)} uploadComplete= {this.getDatafromFirebase.bind(this)} /> )
     }
     else {
-      //if(this.state.readyDisplayResults==false){
-        if(false){
+      if(this.state.readyDisplayResults==false){
       // Once results are loaded, the cards are loaded
 
       return(<div>

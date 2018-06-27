@@ -8,6 +8,7 @@
   padding: 10px;
   color: white;
 }
+
 .App-background {
   background-color:  white;
   width: 100%;
@@ -33,6 +34,7 @@
   box-shadow: 0 5px 3px -3px #d85645;
 }
 
+/* Displays for our app logo*/ 
 .App-logo2 {
   animation: App-logo-spin infinite 20s linear;
   border-top: solid 20px rgba(255,255,255);

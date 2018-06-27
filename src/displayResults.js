@@ -1,5 +1,22 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import logo from './logo.png';
+import ConfettiCanvas from 'react-confetti-canvas';
+import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
+    CardSubtitle, CardBody } from 'reactstrap';
+
+// Basic window for displaying app features
+const loginStyles = {
+    width: "90%",
+    maxWidth: "400px",
+    margin: "20px auto",
+    borderRadius: "5px",
+    padding: "20px",
+    background: "white",
+    color: "black",
+  }
+
+// configuring for API call
 var config = {
   apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
   authDomain: "swiperrrrrr.firebaseapp.com",
@@ -17,6 +34,7 @@ export class DisplayResults extends Component{
         }
     }
     
+    // method to determine the top choice for restaurant
     getLargest() { 
         this.setState({ 
             inital:false
@@ -66,17 +84,33 @@ export class DisplayResults extends Component{
             // console.log(this.state.mostVoted)
   })
     }
+    // displaying results screen with logo, confetti, and cards with top results
     render(){ 
         if(this.state.inital){
             this.getLargest()
     
         }
         return (
-            <div>
-            <h1>Results! </h1>
-
-            <p>Group Code: {this.props.groupCode}</p>
-            <p>Most Right Place: {this.state.mostVoted}</p>
+            <div className="App-background">
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+            {/* Adding confetti to the results page */}
+            <ConfettiCanvas colors={[['#38abb4', '#3b5998'],['#7FB3D5', '#76D7C4'],['#F0B27A', '#7DCEA0']]} duration={0.006} paperCount={100} ribbonCount={11}/>
+            </div>
+                <img src={logo} className="App-logo2" alt="logo" />
+                <div style={loginStyles} >
+                    <div style={{textAlign: "center"}} className="pt-callout pt-icon-info-sign">
+                        <h3> Results </h3>
+                        <hr style={{marginTop: "10px", marginBottom: "10px", color: "#38abb4"}} />
+                        {/* Displaying top results as cards */}
+                        <Card>
+                            <CardBody>
+                            <CardTitle>Top Choice</CardTitle>
+                            <CardSubtitle>{this.state.mostVoted}</CardSubtitle>
+                            <CardText> Group Code: {this.props.groupCode} </CardText>
+                            </CardBody>
+                        </Card>
+                    </div> 
+                </div> 
             </div>  
         ) 
     }  

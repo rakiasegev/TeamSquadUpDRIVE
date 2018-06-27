@@ -122,10 +122,12 @@ export class API extends React.Component {
               this.setState({
                 results: this.state.results.concat({"name":result.name, "rating":result.rating, "photoReference": ref }),
               })
-            this.firebaseResult()
+            
             }.bind(this))
-           // Saves the result in firebase (for the list of results to obtain the )  
+          console.log(this.state.results)
+          this.firebaseResult() // Saves the result in firebase (for the list of results to obtain the )  
           this.props.sendData(this.state.results)   //Sends data to SwiperNoSwiping
+          this.props.uploadComplete() 
           }     
         }.bind(this))
       }
@@ -194,16 +196,36 @@ export class API extends React.Component {
    // ------------------------------------------------------------------------------------------------------------
 
    // -------------------------------------  Database connection ---------------------------------------------------
-   
+    codeGenerator(){
+      var s = "";
+      //var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i = 0; i <= 5; i++)
+      s += Math.round(Math.random()*10);
+      console.log(s)
+      return s
+    }
+    
     firebaseResult(){
+      var randomCode = this.codeGenerator()
+      this.props.sendGroupCode(randomCode)
       // Stores the results in the results state to the firebase database 
-      const ResultsRef = firebase.database().ref("Results")
+      const ResultsRef = firebase.database().ref(randomCode).child("Results")
       ResultsRef.set("null")
       console.log(ResultsRef)
       this.state.results.map(i =>{
         var name= this.replaceAll("."," ",i.name)
-        console.log(name)
+        var rating= "N/A"
+        if(!i.rating==false){
+          rating= i.rating
+        }
+        var photoREF= null 
+        if(!i.photoReference==false){
+          photoREF= i.photoReference
+          console.log(i.photoReference)
+        }
         const branches = {
+            photoRef: photoREF,
+            rating: rating,
             right: 0,
             left:0
         }
@@ -223,11 +245,11 @@ export class API extends React.Component {
             <img src={logo} className="App-logo2" alt="logo" />
             <div style={loginStyles} className="effect1">
       <h2> Enter Location to Search</h2>
-      <hr style={{marginTop: "10px", marginBottom: "10px", color: "#38abb4"}} />
+      <hr style={{marginTop: "10px", marginBottom: "10px"}} />
       <p>
       <label> 
       Location: 
-        <input className="location_input" type="text" placeholder="City, Country" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
+        <input className="location_input" type="text" placeholder="Claremont" value={this.state.value} onChange={this.handleChangeSubmitLocation.bind(this)} />
         <button onClick={this.handleSubmitLocation.bind(this)}>Submit</button>
         <button onClick={ this.getDeviceLocation.bind(this) }> <img src={gps}/>  Use Device Location </button> 
       </label>

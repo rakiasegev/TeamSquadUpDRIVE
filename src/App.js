@@ -26,7 +26,9 @@ class App extends Component {
     super();
     this.state = {
       user: null ,
-      activeTab: '1'
+      activeTab: '1',
+      GroupCode: null,
+      submitGC: false 
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,6 +45,19 @@ class App extends Component {
     }
   }
   
+  handleChangeGC (e){
+    this.setState({
+      GroupCode: e.target.value
+    })
+  }
+  
+  handleSubmitGC (e){
+    console.log("Join Group Clicked")
+    this.setState({
+      submitGC: e.target.value
+    })
+  }
+
   //receives inputs from our inputs and updates the corresponding piece of state
   handleChange(e) {
     this.setState({
@@ -99,7 +114,7 @@ class App extends Component {
     });}    
     
   render() {
-  if(!this.state.user){
+  if(!this.state.user && (this.state.submitGC==false)){
     return (
       <div className="App-background">
             <img src={logo} className="App-logo2" alt="logo" />
@@ -183,8 +198,8 @@ class App extends Component {
       <div style={{textAlign: "center"}} className="pt-callout pt-icon-info-sign">
       <h5>Welcome to SquadUp</h5>
       <p>Enter the shared group code to join the group</p>
-      <input style={{width: "98%"}} type="text" name="GroupCode" placeholder="Group Code" />
-      <button style={{width: "100%", backgroundColor:"#38abb4", borderColor:"#38abb4"}} type="submit" className="btn btn-primary" value="Log In" block> Join Group</button>
+      <input onChange={(e)=>this.handleChangeGC(e)} style={{width: "98%"}} type="text" name="GroupCode" placeholder="Group Code" />
+      <button style={{width: "100%", backgroundColor:"#38abb4", borderColor:"#38abb4"}} type="submit" className="btn btn-primary" onClick={(e)=>this.handleSubmitGC(e)}  value="Log In" block> Join Group</button>
       </div>
       </div>
       </form>
@@ -194,7 +209,13 @@ class App extends Component {
       </div>
     )} 
     else {
-      return (<SwiperNoSwiping/>)
+      if(this.state.submitGC==false){
+      console.log("No Props")
+      return (<SwiperNoSwiping/>)} 
+      else { 
+        console.log("with Props")
+        return (<SwiperNoSwiping groupCode= {this.state.GroupCode}/>)
+      }
     }
   }
 }

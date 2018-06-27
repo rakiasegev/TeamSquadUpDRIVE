@@ -13,11 +13,16 @@ export class SwiperNoSwiping extends Component {
     this.state={ 
          results: null,
          readyDisplayResults: false ,
-         groupC: 364759
+         groupC: null
     }
   }
   getDatafromFirebase() {
-    var root= firebase.database().ref(this.state.groupC).child("Results")
+    var groupC= this.state.groupC
+    if(!this.props==false){ 
+      groupC= this.props.groupCode
+    }
+    console.log(groupC)
+    var root= firebase.database().ref(groupC).child("Results")
     var results = [] 
     var snapshotResults = {}
     var keys = []
@@ -42,6 +47,39 @@ export class SwiperNoSwiping extends Component {
           results: results
         })
       }
+  
+  componentDidMount() { 
+    let currentComponent = this;
+    var groupC= this.state.groupC
+    if(!this.props==false){ 
+      groupC= this.props.groupCode
+    }
+    console.log(groupC)
+    var root= firebase.database().ref(groupC).child("Results")
+    var results = [] 
+    var snapshotResults = {}
+    var keys = []
+    root.once('value',function(snapshot){
+         snapshotResults= Object.assign({},snapshot.val(),snapshotResults)
+         Object.keys(snapshotResults).map(i=> { 
+          var ref= "CmRaAAAAiJXePWe2z4gmIfMTlehvhKrzDWDSLt3qpzNTTb6ePG09O_9McUVlJqbCtwAtEsQShc3XPENqtszlszeFfAm5SlNQMqMpTblxfBHqkF5nOTxpmdrndfWTgeNLrYH3w99nEhCHIJhs2a4Ssv9xlRHz_7BgGhTSCIlnGXCRiDvvqu1PDOfl6_dbKg"
+          if(!snapshotResults[i].photoRef==false){
+            ref= snapshotResults[i].photoRef
+            // Currently only saves the first photo availalbe. 
+          }
+                results= results.concat({
+                    'name': i, 
+                    'rating':snapshotResults[i].rating,
+                    'photoReference': ref
+                })
+         })
+         
+        })
+        console.log(results)
+        currentComponent.setState({
+          results: results
+        })
+  }
 
   sendGroupCode(groupCode){
       this.setState({
@@ -61,20 +99,31 @@ export class SwiperNoSwiping extends Component {
 
 
   render() {
-    var out = null
-    if(this.state.results==null){
+     let currentComponent= this
+    if(this.state.results==null && (!this.props)){
     // As long as no results are loaded, it will keep displaying the location page
       return (<API sendData= {this.getData.bind(this)} sendGroupCode={this.sendGroupCode.bind(this)} uploadComplete= {this.getDatafromFirebase.bind(this)} /> )
     }
     else {
-      if(this.state.readyDisplayResults==false){
+      if(this.state.readyDisplayResults==false && (!this.props)){
       // Once results are loaded, the cards are loaded
-
       return(<div>
       <img src={logo} className="App-logo2" alt="logo"/> 
-      <Cards results={this.state.results} DisplayResults={this.display.bind(this)} groupCode= {this.state.groupC}/> 
+      <Cards results={currentComponent.state.results} DisplayResults={currentComponent.display} groupCode= {currentComponent.state.groupC}/> 
       </div>)
       }
+      else if(this.state.readyDisplayResults==false){
+        if(this.state.groupC==null){
+        this.setState({
+          groupC: this.props.groupCode
+         })}
+         console.log(this.props.groupCode)
+        return(<div>
+          <img src={logo} className="App-logo2" alt="logo"/> 
+          <Cards results={currentComponent.state.results} DisplayResults={currentComponent.display.bind(this)} groupCode= {currentComponent.props.groupCode}/> 
+          </div>)
+          }
+      
       else {
         return (<DisplayResults results={this.state.results} groupCode= {this.state.groupC}/>)
       }

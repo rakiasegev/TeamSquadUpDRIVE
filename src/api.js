@@ -4,14 +4,7 @@ import "./api.css"
 import logo from './logo.png';
 import * as firebase from 'firebase';
 import gps from './gps.png'
-
-// configuration variable for API call
-var config = {
-  apiKey: "AIzaSyCor4vAkog6uforo0X1fYRQmpSc1eXSH0I",
-  authDomain: "swiperrrrrr.firebaseapp.com",
-  databaseURL: "https://swiperrrrrr.firebaseio.com",
-  storageBucket: "swiperrrrrr.appspot.com",
-};
+import apiConfig from './apiKeys';
 
 // Basic window for displaying app features
 const loginStyles = {
@@ -48,8 +41,8 @@ export class API extends React.Component {
         url: 'https://api.foursquare.com/v2/venues/explore',
         method: 'GET',
         qs: {
-          client_id: 'TW4TRBBX0YQESQPMU2ET2TBPZBM51NFSA41MVLT0SRCCK23L',
-          client_secret: 'SFYZY2HMRMZ04IT2PRONNLCBG0FH5URVOSY22SS40ZU12LXX',
+          client_id: apiConfig.client_id,
+          client_secret: apiConfig.client_secret,
           ll: location,
           query: 'coffee',
           v: '20180323',

@@ -107,11 +107,13 @@ class App extends Component {
     });
   }
   componentDidMount() {
+    let currentComponent = this
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ user });
+        currentComponent.setState({ user });
       } 
-    });}    
+    });
+  }    
     
   render() {
   if(!this.state.user && (this.state.submitGC==false)){

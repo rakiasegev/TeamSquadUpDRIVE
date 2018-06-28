@@ -18,6 +18,13 @@
 
 }
 
+.firstplace {
+  height:100px;
+  float: center;
+  display:block;
+  margin: 0 auto;
+}
+
 .tabBarContainer {
   float: center;
 }

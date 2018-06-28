@@ -4,6 +4,7 @@ import logo from './logo.png';
 import ConfettiCanvas from 'react-confetti-canvas';
 import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
     CardSubtitle, CardBody } from 'reactstrap';
+import first from './1.png';
 
 // Basic window for displaying app features
 const loginStyles = {
@@ -94,7 +95,7 @@ export class DisplayResults extends Component{
             <div className="App-background">
             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
             {/* Adding confetti to the results page */}
-            <ConfettiCanvas colors={[['#38abb4', '#3b5998'],['#7FB3D5', '#76D7C4'],['#F0B27A', '#7DCEA0']]} duration={0.006} paperCount={100} ribbonCount={11}/>
+            <ConfettiCanvas colors={[['#38abb4', '#3b5998'],['#7FB3D5', '#76D7C4'],['#d64717', '#e3a75b']]} duration={0.006} paperCount={100} ribbonCount={11}/>
             </div>
                 <img src={logo} className="App-logo2" alt="logo" />
                 <div style={loginStyles} >
@@ -104,6 +105,7 @@ export class DisplayResults extends Component{
                         {/* Displaying top results as cards */}
                         <Card>
                             <CardBody>
+                                <img src={first} className="firstplace" />
                             <CardTitle>Top Choice</CardTitle>
                             <CardSubtitle>{this.state.mostVoted}</CardSubtitle>
                             <CardText> Group Code: {this.props.groupCode} </CardText>

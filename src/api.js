@@ -122,9 +122,8 @@ export class API extends React.Component {
             }.bind(this))
           console.log(this.state.results)
           this.firebaseResult() // Saves the result in firebase (for the list of results to obtain the )  
-          this.props.sendData(this.state.results)   //Sends data to SwiperNoSwiping
-          this.props.uploadComplete() 
-          }     
+          this.props.doneWithAPI()
+        }     
         }.bind(this))
       }
    // ------------------------------------------------------------------------------------------------------------
@@ -192,18 +191,10 @@ export class API extends React.Component {
    // ------------------------------------------------------------------------------------------------------------
 
    // -------------------------------------  Database connection ---------------------------------------------------
-    codeGenerator(){
-      var s = "";
-      //var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i <= 5; i++)
-      s += Math.round(Math.random()*10);
-      console.log(s)
-      return s
-    }
     
     firebaseResult(){
-      var randomCode = this.codeGenerator()
-      this.props.sendGroupCode(randomCode)
+      console.log("API's GC", this.props.groupCode)
+      var randomCode = this.props.groupCode
       // Stores the results in the results state to the firebase database 
       const ResultsRef = firebase.database().ref(randomCode).child("Results")
       ResultsRef.set("null")

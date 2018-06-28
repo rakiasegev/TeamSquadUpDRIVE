@@ -59,9 +59,7 @@ export class Cards extends Component {
 
       componentDidMount() {
         let currentComponent = this
-        var groupC= this.props.groupCode
-        console.log(groupC)
-        var root= firebase.database().ref(groupC).child("Results")
+        var root= firebase.database().ref(this.props.groupCode).child("Results")
         var results = [] 
         var snapshotResults = {}
         var keys = []
@@ -170,6 +168,7 @@ export class Cards extends Component {
     }
 
 render() { 
+    console.log(this.props,"PROPS OF CARDS.JS")
     // if(this.props.results==null){
     //     this.getDatafromFirebase() 
     // }

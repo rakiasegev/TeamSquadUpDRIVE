@@ -27,7 +27,8 @@ class App extends Component {
     this.state = {
       user: null ,
       activeTab: '1',
-      GroupCode: null,
+      GroupCodeInp: null,
+      GroupCode:null,
       submitGC: false 
     }
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +48,7 @@ class App extends Component {
   
   handleChangeGC (e){
     this.setState({
-      GroupCode: e.target.value
+      GroupCodeInp: e.target.value
     })
   }
   
@@ -114,7 +115,15 @@ class App extends Component {
       } 
     });
   }    
-    
+  codeGenerator(){
+    var s = "";
+    //var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i <= 5; i++)
+    s += Math.round(Math.random()*10);
+    console.log(s)
+    return s
+  }
+  
   render() {
   if(!this.state.user && (this.state.submitGC==false)){
     return (
@@ -212,13 +221,14 @@ class App extends Component {
     )} 
     else {
       if(this.state.submitGC==false){
-      console.log("No Props")
-      return (<SwiperNoSwiping/>)} 
+      console.log("No Props", this.state.groupCode)
+      return (<SwiperNoSwiping groupCode= {this.codeGenerator()} loadAPI= {true}/>)} 
       else { 
-        console.log("with Props")
-        return (<SwiperNoSwiping groupCode= {this.state.GroupCode}/>)
+        console.log("with Props", this.state.GroupCodeInp)
+        return (<SwiperNoSwiping groupCode= {this.state.GroupCodeInp} loadAPI= {false}/>)
       }
     }
+
   }
 }
 export default App;

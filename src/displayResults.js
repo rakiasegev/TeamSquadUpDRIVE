@@ -31,7 +31,11 @@ export class DisplayResults extends Component{
         this.state= { 
             resultsRef: firebase.database().ref('Results'),
             inital: true,
-            mostVoted:"hoch"
+            mostVoted:"hoch",
+            mostVotedPhotoRef: null ,
+            mostVotedRating: null, 
+            key: "AIzaSyBj5Bbl7_qJu0GpXIEpqvc_xzVBlyMPyKU", // Google API call 
+
         }
     }
     
@@ -81,7 +85,16 @@ export class DisplayResults extends Component{
             currentComponent.setState({
                 mostVoted:mostVoted
             })
-      
+        if(currentComponent.state.mostVoted!= null) { 
+        root.child("Results").child(currentComponent.state.mostVoted).once("value", function(snapshot){
+            let mostVotedPhotoRef = snapshot.val().photoRef
+            let mostVotedRating = snapshot.val().rating 
+            currentComponent.setState({
+                mostVotedRating:mostVotedRating,
+                mostVotedPhotoRef:mostVotedPhotoRef
+            })
+        })}
+
             // console.log(this.state.mostVoted)
   })
     }
@@ -105,10 +118,13 @@ export class DisplayResults extends Component{
                         {/* Displaying top results as cards */}
                         <Card>
                             <CardBody>
+                            <CardTitle style={{color: "#38abb4"}}> Group Code: {this.props.groupCode} </CardTitle>
+
                                 <img src={first} className="firstplace" />
-                            <CardTitle>Top Choice</CardTitle>
-                            <CardSubtitle>{this.state.mostVoted}</CardSubtitle>
-                            <CardText> Group Code: {this.props.groupCode} </CardText>
+                            <CardTitle>{this.state.mostVoted}</CardTitle>
+                            <CardText> Rating: {this.state.mostVotedRating} </CardText> 
+
+                            <CardImg top width="80%" crossOrigin="Anonymous" src= {'http://localhost:8080/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + this.state.mostVotedPhotoRef+ "&key="+this.state.key } alt="Card image cap" />
                             </CardBody>
                         </Card>
                     </div> 
